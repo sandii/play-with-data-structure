@@ -3,6 +3,7 @@
 * data: Apr 17, 2017
 *
 * link list
+* - index from 1
 * - position 0 is head node, store no data
 * - LinkList is actually a pointer to struct Node
 */

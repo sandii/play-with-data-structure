@@ -22,7 +22,7 @@ typedef int ElemType;
 typedef struct {
 	ElemType data[MAXSIZE];
 	int length;
-} SqList; 
+} SqList;
 
 
 Status init (SqList* lp) {
@@ -99,7 +99,6 @@ main () {
 		insert(&list, i, i * 2);
 	}
 	traverse(&list);
-
 	printf("Length: %d\n", getLength(&list));
 	printf("At position 6: %d\n", getElem(&list, 6));
 
