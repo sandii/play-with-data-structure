@@ -5,7 +5,7 @@
 * link list
 * - index from 1
 * - position 0 is head node, store no data
-* - LinkList is actually a pointer to struct Node
+* - LinkList is actually a pointer to struct node
 */
 
 #include <stdio.h>
@@ -20,29 +20,29 @@
 typedef int Status;
 typedef int ElemType;
 
-struct Node {
+struct node {
 	ElemType data;
-	struct Node* next;
+	struct node* next;
 };
-typedef struct Node* LinkList;
+typedef struct node* LinkList;
 
 
 
 
 
-LinkList newNode () {
-	return (LinkList) malloc(sizeof(struct Node));
+struct node* createNode () {
+	return (struct node*) malloc(sizeof(struct node));
 }
 
-void addNode (LinkList target, ElemType n) {
-	LinkList p = newNode();
+void addNode (struct node* target, ElemType n) {
+	struct node* p = createNode();
 	p -> data = n;
 	p -> next = target -> next;
 	target -> next = p;
 }
 
-Status delNode (LinkList prev) {
-	LinkList curr = prev -> next;
+Status delNode (struct node* prev) {
+	struct node* curr = prev -> next;
 	if (curr == NULL) return ERROR;
 	prev -> next = curr -> next;
 	free(curr);
@@ -51,7 +51,7 @@ Status delNode (LinkList prev) {
 
 int getLength (LinkList list) {
 	int len = 0;
-	for (LinkList p = list -> next; p != NULL; p = p -> next) {
+	for (struct node* np = list -> next; np != NULL; np = np -> next) {
 		len++;
 	}
 	return len;
@@ -134,7 +134,7 @@ int locateElem (LinkList list, ElemType n) {
 
 
 main () {
-	LinkList list = newNode();
+	LinkList list = createNode();
 	list -> next = NULL;
 
 	for (int i = 0; i < 10; i++) insertAtHead(list, i * 3);
