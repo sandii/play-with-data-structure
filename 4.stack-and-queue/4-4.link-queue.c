@@ -4,8 +4,8 @@
 *
 * link queue
 * - head always points to an empty leading node
-* - tail points to last node of non-empty queue
-* - tail points to leading node of none-empty queue
+* - if queue is not empty, tail points to last node
+* - if queue is empty, tail points to the empty leading node
 *
 */
 

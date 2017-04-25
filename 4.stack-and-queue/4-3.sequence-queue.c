@@ -3,7 +3,10 @@
 * data: Apr 24, 2017
 *
 * sequence queue
-*
+* - head indexes head
+* - tail indexes the empty position that ready to contain next data
+* - so when queue is empty, head and tail index the same empty position
+* - when queue is full, head and tail index the same head position
 */
 
 #include <stdio.h>

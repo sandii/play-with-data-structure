@@ -3,7 +3,7 @@
 * data: Apr 24, 2017
 *
 * sequence stack
-*
+* - top is -1 when stack is empty
 */
 
 #include <stdio.h>
@@ -20,7 +20,7 @@ typedef int Status;
 
 typedef struct {
 	ElemType data[MAXSIZE];
-	int top;	// -1 when stack is empty
+	int top;
 } SqStack;
 
 
