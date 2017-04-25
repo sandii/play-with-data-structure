@@ -3,6 +3,9 @@
 * data: Apr 24, 2017
 *
 * link stack
+* - LinkStack is actually a pointer of node
+* - when stack is empty, it points to NULL
+* - when stack is not tempty, it points to top node
 *
 */
 
