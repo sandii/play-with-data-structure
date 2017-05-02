@@ -2,14 +2,12 @@
 * author: chenzhi <chenzhibupt@qq.com>
 * data: May 2, 2017
 *
-* kmp
-* - invented by knuth-morris-pratt in 1977
-* - key is to find common part of prefix and suffix of pattern string
-* - and we can get an array next[]
+* kmp optimized
 *
 *  A B A B A C D - pattern string
 *  0 0 1 2 3 0 0 - length of common part of prefix and suffix
 * -1 0 0 1 2 3 0 - move left one step to get next[] and next[0] = 0
+* -1 0-1 0-1 3 0
 */
 
 #include <stdio.h>
@@ -24,7 +22,7 @@ void getNext (char* p, int next[]) {
 		if (k == -1 || p[k] == p[j]) {
 			k++;
 			j++;
-			next[j] = k;
+			next[j] = p[k] == p[j] ? next[k] : k;	// !!!
 		} else {
 			k = next[k];
 		}
@@ -57,6 +55,6 @@ main () {
 	printf("%d\n", kmp("hello", "ell"));
 	printf("%d\n", kmp("hello", "all"));
 	printf("%d\n", kmp("hello", "hel"));
-	printf("%d\n", kmp("hello", "ababab"));
+	printf("%d\n", kmp("hello", "ababacd"));
 }
 
