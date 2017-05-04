@@ -7,7 +7,7 @@
 *  A B A B A C D - pattern string
 *  0 0 1 2 3 0 0 - length of common part of prefix and suffix
 * -1 0 0 1 2 3 0 - move left one step to get next[] and next[0] = 0
-* -1 0-1 0-1 3 0
+* -1 0-1 0-1 3 0 - nextOptimized[]
 */
 
 #include <stdio.h>
