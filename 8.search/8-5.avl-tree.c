@@ -2,7 +2,8 @@
 * author: chenzhi <chenzhibupt@qq.com>
 * data: May 5, 2017
 *
-* avl tree
+* AVL tree
+* - invented by two former Soviet Union mathematicians in 1962
 * - add int bf into node to record balance status of node
 * - bf = (left tree height) - (right tree height)
 * - when abs(bf) >= 2, we should do some rotations to rebalance it

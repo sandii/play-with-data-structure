@@ -11,7 +11,7 @@
 
 #define MAX 20
 
-int binarySearch (int a[], int key) {
+int interpolationSearch (int a[], int key) {
 	int low = 0;
 	int high = MAX - 1;
 	int ratio;
@@ -36,9 +36,9 @@ main () {
 	for (int i = 0; i < MAX; i++) {
 		a[i] = i * 2;
 	}
-	printf("%d\n", binarySearch(a, 12));
-	printf("%d\n", binarySearch(a, 100));
-	printf("%d\n", binarySearch(a, -1));
-	printf("%d\n", binarySearch(a, 3));
-	printf("%d\n", binarySearch(a, 14));
+	printf("%d\n", interpolationSearch(a, 12));
+	printf("%d\n", interpolationSearch(a, 10));
+	printf("%d\n", interpolationSearch(a, -1));
+	printf("%d\n", interpolationSearch(a, 3));
+	printf("%d\n", interpolationSearch(a, 14));
 }
