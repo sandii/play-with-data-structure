@@ -2,7 +2,7 @@
 * author: chenzhi <chenzhibupt@qq.com>
 * data: May 12, 2017
 *
-* heap sort
+* merge sort
 * - detach array into small parts, sort small arrays, and merge them
 * - stable but occupy some storage space
 */
@@ -22,12 +22,6 @@ void traverse (int a[]) {
 		printf("%2d ", a[i]);
 	}
 	printf("\n");
-}
-void swap (int a[], int i, int j) {
-	if (i == j) return;
-	int temp = a[i];
-	a[i] = a[j];
-	a[j] = temp;
 }
 void doMerge (int src[], int dst[], int sta, int end) {
 	int mid = (sta + end) / 2;
