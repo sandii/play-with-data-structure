@@ -70,7 +70,6 @@ void init (MGraph* gp, char* vStr, char* aStr) {
 	char* numArr[3];
 	split(dotArr, aStr, ',');
 	for (int k = 0; k < arcNum; k++) {
-		printf("%s\n", dotArr[k]);
 		split(numArr, dotArr[k], '-');
 		int i = atoi(numArr[0]);
 		int j = atoi(numArr[1]);
@@ -93,12 +92,36 @@ void printA (MGraph* gp) {
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
-void traverse (int a[]) {
-	// for (int i = 0; i < LEN; i++) {
-	// 	printf("%2d ", a[i]);
-	// }
-	// printf("\n");
+
+
+typedef int boolean;
+#define TRUE  1
+#define FALSE 0
+
+boolean visited[VMAX];
+void visitDFS (MGraph* gp, int i) {
+	printf("%c ", gp -> vertex[i]);
+	visited[i] = TRUE;
+
+	for (int j = 0; j < gp -> vertexNum; j++) {
+		if (gp -> arc[i][j] > 0 && visited[j] == FALSE) {
+			visitDFS(gp, j);
+		}
+	}
+}
+void traverseDFS (MGraph* gp) {
+	// initiate visited array
+	printf("Depth-first traverse: ");
+	for (int i = 0; i < gp -> vertexNum; i++) {
+		visited[i] = FALSE;
+	}
+	for (int i = 0; i < gp -> vertexNum; i++) {
+		if (visited[i] == TRUE) continue;
+		visitDFS(gp, i);
+	}
+	printf("\n\n");
 }
 
 
@@ -108,5 +131,7 @@ main () {
 	printV(gp);
 	printf("\n");
 	printA(gp);
+
+	traverseDFS(gp);
 }
 
