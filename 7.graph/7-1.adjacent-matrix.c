@@ -3,8 +3,7 @@
 * data: May 22, 2017
 *
 * adjacent matrix
-* - 
-* - 0-4-6 means arc[0][4] = 6
+* - i-j-weight: 0-4-6 means arc[0][4] = 6
 *
 */
 
@@ -82,7 +81,7 @@ void printV (MGraph* gp) {
 	for (int i = 0; i < gp -> vertexNum; i++) {
 		printf("%c ", gp -> vertex[i]);
 	}
-	printf("\n");
+	printf("\n\n");
 }
 void printA (MGraph* gp) {
 	printf("Arc:\n");
@@ -106,9 +105,9 @@ void visitDFS (MGraph* gp, int i) {
 	visited[i] = TRUE;
 
 	for (int j = 0; j < gp -> vertexNum; j++) {
-		if (gp -> arc[i][j] > 0 && visited[j] == FALSE) {
-			visitDFS(gp, j);
-		}
+		if (gp -> arc[i][j] <= 0) continue;
+		if (visited[j] == TRUE) continue;
+		visitDFS(gp, j);
 	}
 }
 void traverseDFS (MGraph* gp) {
@@ -124,14 +123,81 @@ void traverseDFS (MGraph* gp) {
 	printf("\n\n");
 }
 
+// bfs needs a queue
+typedef struct {
+	int data[VMAX];
+	int head;
+	int tail;
+	int len;
+} Queue;
+// set queue as a global variable
+Queue queue;
+
+void init () {
+	queue.head = 0;
+	queue.tail = 0;
+	queue.len = 0;
+}
+boolean fullQueue () { return queue.len == VMAX ? TRUE : FALSE; }
+boolean emptyQueue () { return queue.len == 0 ? TRUE : FALSE; }
+void enQueue (int n) {
+	if (fullQueue()) return;
+	queue.data[queue.tail] = n;
+	queue.tail = (queue.tail == VMAX - 1) ? 0 : queue.tail + 1;
+	(queue.len)++;
+}
+int deQueue () {
+	if (emptyQueue()) return 0;
+	int n = queue.data[queue.head];
+	queue.head = (queue.head == VMAX - 1) ? 0 : queue.head + 1;
+	(queue.len)--;
+}
+
+// bfs begins
+void visitBFS (MGraph* gp, int i) {
+	printf("%c ", gp -> vertex[i]);
+	visited[i] = TRUE;
+
+	enQueue(i);
+}
+void traverseBFS (MGraph* gp) {
+	printf("Breadth-first traverse: ");
+	for (int i = 0; i < gp -> vertexNum; i++) {
+		visited[i] = FALSE;
+	}
+	for (int k = 0; k < gp -> vertexNum; k++) {
+		if (visited[k] == TRUE) continue;
+		visitBFS(gp, k);
+		while (!emptyQueue()) {
+			int i = deQueue();
+			for (int j = 0; j < gp -> vertexNum; j++) {
+				if (gp -> arc[i][j] <= 0) continue;
+				if (visited[j] == TRUE) continue;
+				visitBFS(gp, j);
+			}
+		}
+	}
+	printf("\n\n");
+}
+
 
 main () {
-	MGraph* gp = (MGraph*) malloc(sizeof(MGraph));
-	init(gp, "abcde", "0-4-6,1-0-9,1-2-3,2-0-2,2-3-5,3-4-1");
-	printV(gp);
-	printf("\n");
-	printA(gp);
+	MGraph gragh;
+	// a simple graph, see 7-1-1.jpg
+	init(&gragh, (char*)("abcde"), (char*)("0-4-6,1-0-9,1-2-3,2-0-2,2-3-5,3-4-1"));
+	printV(&gragh);
+	printA(&gragh);
+	traverseDFS(&gragh);
+	traverseBFS(&gragh);
+	printf("\n\n");
 
-	traverseDFS(gp);
+	// a more complicated graph, see 7-1-2.jpg
+	// ABCDEFGHI
+	// 012345678
+	init(&gragh, (char*)("ABCDEFGHI"), (char*)("0-1-1,0-5-1,1-0-1,1-2-1,1-6-1,1-8-1,2-1-1,2-3-1,2-8-1,3-2-1,3-4-1,3-6-1,3-7-1,3-8-1,4-3-1,4-5-1,4-7-1,5-0-1,5-4-1,5-6-1,6-1-1,6-3-1,6-5-1,7-3-1,7-4-1,7-6-1,8-1-1,8-2-1,8-3-1"));
+	printV(&gragh);
+	printA(&gragh);
+	traverseDFS(&gragh);
+	traverseBFS(&gragh);
 }
 
