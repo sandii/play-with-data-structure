@@ -28,7 +28,6 @@ typedef struct {
 	int arcNum;
 } LGraph;
 
-
 void split (char* arr[], char* str, char gap) {
 	int i = 0;
 	int subLen = 0;
