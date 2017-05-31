@@ -232,4 +232,3 @@ main () {
 	initQueue();
 	traverseBFS(&gragh);
 }
-
