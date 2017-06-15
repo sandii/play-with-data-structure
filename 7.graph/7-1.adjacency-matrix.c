@@ -12,7 +12,7 @@
 #include <ctype.h>	// isdigit
 #include <stdlib.h> // malloc
 
-#define VOID -1
+#define INFINITY 65536
 #define VMAX 20
 
 typedef struct {
@@ -59,7 +59,7 @@ void init (MGraph* gp, char* vStr, char* aStr) {
 	// init arc matrix
 	for (int i = 0; i < vertexNum; i++) {
 		for (int j = 0; j < vertexNum; j++) {
-			gp -> arc[i][j] = i == j ? 0 : VOID;
+			gp -> arc[i][j] = i == j ? 0 : INFINITY;
 		}
 	}
 
@@ -84,18 +84,29 @@ void init (MGraph* gp, char* vStr, char* aStr) {
 	freeArr(dotArr, arcNum);
 	freeArr(numArr, 3);
 }
-void printV (MGraph* gp) {
-	printf("Vertex: ");
-	for (int i = 0; i < gp -> vertexNum; i++) {
-		printf("%c ", gp -> vertex[i]);
-	}
-	printf("\n\n");
-}
-void printA (MGraph* gp) {
-	printf("Arc:\n");
+void printMatrix (MGraph* gp) {
+	printf("Matrix:\n");
 	for (int i = 0; i < gp -> vertexNum; i++) {
 		for (int j = 0; j < gp -> vertexNum; j++) {
-			printf("%2d ", gp -> arc[i][j]);
+			int weight = gp -> arc[i][j];
+			if (weight == INFINITY) {
+				printf(" * ");
+			} else {
+				printf("%2d ", weight);				
+			}
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+void printArc (MGraph* gp) {
+	printf("Arc:\n");
+	for (int i = 0; i < gp -> vertexNum; i++) {
+		printf("%c - ", gp -> vertex[i]);
+		for (int j = 0; j < gp -> vertexNum; j++) {
+			int weight = gp -> arc[i][j];
+			if(weight == INFINITY || weight == 0) continue;
+			printf("%c ", gp -> vertex[j]);
 		}
 		printf("\n");
 	}
@@ -194,8 +205,8 @@ main () {
 	MGraph gragh;
 	// a simple graph, see 7-1-1.jpg
 	init(&gragh, (char*)("abcde"), (char*)("0-4-6,1-0-9,1-2-3,2-0-2,2-3-5,3-4-1"));
-	printV(&gragh);
-	printA(&gragh);
+	printArc(&gragh);
+	printMatrix(&gragh);
 	traverseDFS(&gragh);
 	initQueue();
 	traverseBFS(&gragh);
@@ -205,8 +216,8 @@ main () {
 	// ABCDEFGHI
 	// 012345678
 	init(&gragh, (char*)("ABCDEFGHI"), (char*)("0-1-1,0-5-1,1-0-1,1-2-1,1-6-1,1-8-1,2-1-1,2-3-1,2-8-1,3-2-1,3-4-1,3-6-1,3-7-1,3-8-1,4-3-1,4-5-1,4-7-1,5-0-1,5-4-1,5-6-1,6-1-1,6-3-1,6-5-1,7-3-1,7-4-1,7-6-1,8-1-1,8-2-1,8-3-1"));
-	printV(&gragh);
-	printA(&gragh);
+	printArc(&gragh);
+	printMatrix(&gragh);
 	traverseDFS(&gragh);
 	initQueue();
 	traverseBFS(&gragh);

@@ -102,14 +102,7 @@ void clear (LGraph* gp) {
 	gp -> vertexNum = 0;
 	gp -> arcNum = 0;
 }
-void printV (LGraph* gp) {
-	printf("Vertex: ");
-	for (int i = 0; i < gp -> vertexNum; i++) {
-		printf("%c ", gp -> vertex[i].data);
-	}
-	printf("\n\n");
-}
-void printA (LGraph* gp) {
+void printArc (LGraph* gp) {
 	printf("Arc:\n");
 	for (int i = 0; i < gp -> vertexNum; i++) {
 		printf("%c - ", gp -> vertex[i].data);
@@ -214,8 +207,7 @@ main () {
 	LGraph gragh;
 	// a simple graph, see 7-1-1.jpg
 	init(&gragh, (char*)("abcde"), (char*)("0-4-6,1-0-9,1-2-3,2-0-2,2-3-5,3-4-1"));
-	printV(&gragh);
-	printA(&gragh);
+	printArc(&gragh);
 	traverseDFS(&gragh);
 	initQueue();
 	traverseBFS(&gragh);
@@ -226,8 +218,7 @@ main () {
 	// 012345678
 	clear(&gragh);
 	init(&gragh, (char*)("ABCDEFGHI"), (char*)("0-1-1,0-5-1,1-0-1,1-2-1,1-6-1,1-8-1,2-1-1,2-3-1,2-8-1,3-2-1,3-4-1,3-6-1,3-7-1,3-8-1,4-3-1,4-5-1,4-7-1,5-0-1,5-4-1,5-6-1,6-1-1,6-3-1,6-5-1,7-3-1,7-4-1,7-6-1,8-1-1,8-2-1,8-3-1"));
-	printV(&gragh);
-	printA(&gragh);
+	printArc(&gragh);
 	traverseDFS(&gragh);
 	initQueue();
 	traverseBFS(&gragh);
