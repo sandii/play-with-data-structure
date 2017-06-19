@@ -121,7 +121,7 @@ void printArc (MGraph* gp) {
 }
 
 void prim (MGraph* gp) {
-	printf("Mininum Cost Spanning Tree - Prim:\n\n");
+	printf("Mininum Cost Spanning Tree - Prim:\n");
 	printf("from - to - cost\n");
 
 	int vertexNum = gp -> vertexNum; 
@@ -134,7 +134,6 @@ void prim (MGraph* gp) {
 	}
 	for (int i = 0; i < vertexNum; i++) {
 		cost[i] = gp -> arc[0][i];
-
 	}
 
 	// big loop
@@ -164,12 +163,106 @@ void prim (MGraph* gp) {
 }
 
 
+typedef struct {
+	int sta;
+	int end;
+	int weight;	
+} EdgeNode;
+
+void initEdgeList (MGraph* gp, EdgeNode edgeList[]) {
+	int k = 0;	// edgeList index
+	for (int i = 0; i < gp -> vertexNum; i++) {
+		for (int j = 0; j < gp -> vertexNum; j++) {
+			int weight = gp -> arc[i][j];
+			if (weight == 0 || weight == INFINITY) continue;
+			edgeList[k].sta = i;
+			edgeList[k].end = j;
+			edgeList[k].weight = weight;
+			k++;
+		}
+	}
+}
+void swapEdgeNode (EdgeNode edgeList[], int i, int j) {
+	if (i == j) return;
+	int sta 			= edgeList[i].sta;
+	int end 			= edgeList[i].end;
+	int weight 			= edgeList[i].weight;
+	edgeList[i].sta 	= edgeList[j].sta;
+	edgeList[i].end 	= edgeList[j].end;
+	edgeList[i].weight 	= edgeList[j].weight;
+	edgeList[j].sta 	= sta;
+	edgeList[j].end 	= end;
+	edgeList[j].weight 	= weight;
+}
+void sortEdgeList (EdgeNode edgeList[], int l, int r) {
+	if (l >= r) return;
+	int pivot = (l + r) / 2;
+	int pivotWeight = edgeList[pivot].weight;
+	swapEdgeNode(edgeList, l, pivot);
+	int reader = l + 1;
+	int writer = l + 1;
+	for ( ; reader <= r; reader++) {
+		if (edgeList[reader].weight >= pivotWeight) continue;
+		swapEdgeNode(edgeList, writer++, reader);
+	}
+	writer--;
+	swapEdgeNode(edgeList, l, writer);
+
+	sortEdgeList(edgeList, l, writer - 1);
+	sortEdgeList(edgeList, writer + 1, r);
+}
+void printEdgeList (EdgeNode edgeList[], int len) {
+	printf("Edge List:\n");
+	printf("from - to - weight\n");
+	for (int i = 0; i < len; i++) {
+		int sta 	= edgeList[i].sta;
+		int end 	= edgeList[i].end;
+		int weight 	= edgeList[i].weight;
+		printf("%4d - %2d - %2d\n", sta, end, weight);
+	}
+	printf("\n\n");
+}
+int gotoEnd (int i, int parent[]) {
+	while (parent[i] != -1) {
+		i = parent[i];
+	};
+	return i;
+}
+void kruskal (MGraph* gp) {
+	EdgeNode edgeList[gp -> arcNum];
+	initEdgeList(gp, edgeList);
+	sortEdgeList(edgeList, 0, gp -> arcNum - 1);
+	printEdgeList(edgeList, gp -> arcNum);
+
+	int parent[gp -> vertexNum];
+	for (int i = 0; i < gp -> vertexNum; i++) {
+		parent[i] = -1;
+	}
+
+	printf("Mininum Cost Spanning Tree - Kruskal:\n");
+	printf("from - to - cost\n");
+	for (int i = 0; i < gp -> arcNum; i++) {
+		EdgeNode edge = edgeList[i];
+		int sta = gotoEnd(edge.sta, parent);
+		int end = gotoEnd(edge.end, parent);
+		if (sta == end) continue;
+		parent[sta] = end;
+		printf("%4d - %2d - %2d\n", edge.sta, edge.end, edge.weight);
+	}
+}
+
+
+
 main () {
 	MGraph gragh;
 	// see 7-3.jpg
 	init(&gragh, (char*)("012345678"), (char*)("0-1-10,0-5-11,1-0-10,1-2-18,1-6-16,1-8-12,2-1-18,2-3-22,2-8-8,3-2-22,3-4-20,3-6-24,3-7-16,3-8-21,4-3-20,4-5-26,4-7-7,5-0-11,5-4-26,5-6-17,6-1-16,6-3-24,6-5-17,6-7-19,7-3-16,7-4-7,7-6-19,8-1-12,8-2-8,8-3-21"));
 	printArc(&gragh);
 	printMatrix(&gragh);
+	
 	printf("\n\n");
-	prim(&gragh);
+	
+	prim(&gragh);	
+	printf("\n\n");
+	kruskal(&gragh);
 }
