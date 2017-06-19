@@ -124,7 +124,8 @@ void visitDFS (MGraph* gp, int i) {
 	visited[i] = TRUE;
 
 	for (int j = 0; j < gp -> vertexNum; j++) {
-		if (gp -> arc[i][j] <= 0) continue;
+		if (gp -> arc[i][j] == 0) continue;
+		if (gp -> arc[i][j] == INFINITY) continue;
 		if (visited[j] == TRUE) continue;
 		visitDFS(gp, j);
 	}
@@ -191,7 +192,8 @@ void traverseBFS (MGraph* gp) {
 		while (!emptyQueue()) {
 			int i = deQueue();
 			for (int j = 0; j < gp -> vertexNum; j++) {
-				if (gp -> arc[i][j] <= 0) continue;
+				if (gp -> arc[i][j] == 0) continue;
+				if (gp -> arc[i][j] == INFINITY) continue;
 				if (visited[j] == TRUE) continue;
 				visitBFS(gp, j);
 			}
