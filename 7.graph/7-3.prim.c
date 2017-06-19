@@ -2,9 +2,16 @@
 * author: chenzhi <chenzhibupt@qq.com>
 * data: June 18, 2017
 *
-* prim
 * mininum cost spanning tree
+* 1. prim
+* - start from 0
+* - traverse all reachable vertexes, go to neareast one
+* - update list of reachable vertexes
 *
+* 2. kruskal
+* - generate descendant list of all edges
+* - traverse all edges
+* - if edge will not cause a ring, obsorb it into tree
 */
 
 #include <stdio.h>
