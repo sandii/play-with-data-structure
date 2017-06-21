@@ -113,8 +113,42 @@ void printArc (LGraph* gp) {
 }
 
 
+typedef int boolean;
+#define TRUE  1
+#define FALSE 0
 
+boolean topologicalSort (LGraph* gp) {
+	ArcNode* np = NULL;
+	int vNum = gp -> vertexNum;
+	int count = 0;
 
+	// stack
+	int top = 0;
+	int stack[vNum];
+
+	// init
+	for (int i = 0; i < vNum; i++) {
+		if(gp -> vertex[i].in) continue;
+		stack[top++] = i;
+	}
+
+	// main loop
+	while (top) {
+		int popped = stack[--top];
+		printf("%2d ", gp -> vertex[popped].data);
+		count++;
+
+		for (np = gp -> vertex[popped].firstEdge; np; np = np -> next) {
+			int i = np -> adjacency;
+			(gp -> vertex[i].in)--;
+			if (gp -> vertex[i].in) continue;
+			stack[top++] = i;
+		}
+	}
+	printf("\n\n");
+	return count == vNum ? FALSE : TRUE;
+
+}
 
 main () {
 	LGraph gragh;
@@ -122,4 +156,7 @@ main () {
 	init(&gragh, (char*)("0,1,2,3,4,5,6,7,8,9,10,11,12,13"), (char*)("0-4-1,0-5-1,0-11-1,1-2-1,1-4-1,1-8-1,2-5-1,2-6-1,2-9-1,3-2-1,3-13-1,4-7-1,5-8-1,5-12-1,6-5-1,8-7-1,9-10-1,10-13-1,12-9-1"));
 	printArc(&gragh);
 	printf("\n\n");
+
+	boolean rs = topologicalSort(&gragh);
+	printf("Gragh has ring: %d\n", rs);
 }
