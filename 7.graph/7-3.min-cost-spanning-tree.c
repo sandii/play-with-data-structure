@@ -3,15 +3,20 @@
 * data: June 18, 2017
 *
 * mininum cost spanning tree
+* - connect every vertex with mininum cost
+*
 * 1. prim
 * - start from 0
 * - traverse all reachable vertexes, go to neareast one
 * - update list of reachable vertexes
-*
+* 
 * 2. kruskal
 * - generate descendant list of all edges
 * - traverse all edges
 * - if edge will not cause a ring, obsorb it into tree
+* 
+* time comlexity : n^2  vs  eloge
+* so : many edges, use prim; few edges, use kruskal.
 */
 
 #include <stdio.h>
@@ -136,7 +141,7 @@ void prim (MGraph* gp) {
 		cost[i] = gp -> arc[0][i];
 	}
 
-	// big loop
+	// main loop
 	for (int k = 1; k < vertexNum; k++) {
 
 		// look for best choice
