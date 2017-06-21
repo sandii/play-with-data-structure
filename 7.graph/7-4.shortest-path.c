@@ -13,7 +13,8 @@
 * - so from any to any, time complexity will be n^3
 *
 * 2. floyd
-* - create two matrix, make them tidy
+* - create two matrix, cost and path, traverse them
+* - time complexity is n^3
 *
 */
 
