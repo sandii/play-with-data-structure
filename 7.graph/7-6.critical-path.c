@@ -142,27 +142,66 @@ boolean topologicalSort (LGraph* gp, int stack2[], int* top2, int etv[]) {
 
 	// main loop
 	while (top) {
-		int popped = stack[--top];
-		printf("%2d ", gp -> vertex[popped].data);
+		int sta = stack[--top];
+		printf("%2d ", gp -> vertex[sta].data);
 		count++;
 
-		stack2[(*top2)++] = popped;		// push into stack2
+		stack2[(*top2)++] = sta;		// push into stack2
 
-		for (np = gp -> vertex[popped].firstEdge; np; np = np -> next) {
-			int i = np -> adjacency;
-			(gp -> vertex[i].in)--;
-			if (gp -> vertex[i].in == 0) {
-				stack[top++] = i;	
+		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+			int end = np -> adjacency;
+			(gp -> vertex[end].in)--;
+			if (gp -> vertex[end].in == 0) {
+				stack[top++] = end;	
 			}
-			if (etv[i] < etv[popped] + np -> weight) {
-				etv[i] = etv[popped] + np -> weight;
+			if (etv[end] < etv[sta] + np -> weight) {
+				etv[end] = etv[sta] + np -> weight;
 			}
 		}
 	}
 	printf("\n\n");
 	return count == vNum ? FALSE : TRUE;
 }
-void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {}
+#define INFINITY 65535
+int maxInArr (int arr[], int len) {
+	int max = -INFINITY;
+	for (int i = 0; i < len; i++) {
+		if (max >= arr[i]) continue;
+		max = arr[i];
+	}
+	return max;
+}
+void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
+	int vNum = gp -> vertexNum;
+	ArcNode* np = NULL;
+	int ltv[vNum];
+
+	// init
+	int max = maxInArr(etv, vNum);
+	for (int i = 0; i < vNum; i++) {
+		ltv[i] = max;
+	}
+
+	// get ltv
+	while (*top2) {
+		int sta = stack2[--(*top2)];
+		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+			int end = np -> adjacency;
+			if (ltv[sta] >= ltv[end] - np -> weight) continue;
+			ltv[sta] = ltv[end] - np -> weight;
+		}
+	}
+
+	// print result
+	printf("Critical Path:\n");
+	for (int sta = 0; sta < vNum; sta++) {
+		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+			int end = np -> adjacency;
+			if (ltv[sta] != ltv[end] - np -> weight) continue;
+			printf("<%d, %d> ", sta, end);
+		}
+	}
+}
 
 main () {
 	LGraph gragh;
