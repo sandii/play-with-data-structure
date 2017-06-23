@@ -1,11 +1,14 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: June 21, 2017
+* data: June 23, 2017
 *
-* topological sort
-* - to tell gragh has ring or not, process is feasible or not
-* - remove 0 in-degree vertex and loop it
-* - at last to see is there any vertex left
+* critical path
+* - from start point to end, longest path is critical path
+* - shorten critical path can shorten total time
+* 
+* - if one edge's start from v1, end at v2
+* - when earliest time of v1 == lastest time of v2 - cost
+* - then the edge is a part of critical path
 *
 */
 
@@ -120,7 +123,8 @@ typedef int boolean;
 #define TRUE  1
 #define FALSE 0
 
-boolean topologicalSort (LGraph* gp) {
+
+boolean topologicalSort (LGraph* gp, int stack2[], int* top2, int etv[]) {
 	ArcNode* np = NULL;
 	int vNum = gp -> vertexNum;
 	int count = 0;
@@ -133,6 +137,7 @@ boolean topologicalSort (LGraph* gp) {
 	for (int i = 0; i < vNum; i++) {
 		if(gp -> vertex[i].in) continue;
 		stack[top++] = i;
+		etv[i] = 0;
 	}
 
 	// main loop
@@ -141,24 +146,35 @@ boolean topologicalSort (LGraph* gp) {
 		printf("%2d ", gp -> vertex[popped].data);
 		count++;
 
+		stack2[(*top2)++] = popped;		// push into stack2
+
 		for (np = gp -> vertex[popped].firstEdge; np; np = np -> next) {
 			int i = np -> adjacency;
 			(gp -> vertex[i].in)--;
-			if (gp -> vertex[i].in) continue;
-			stack[top++] = i;
+			if (gp -> vertex[i].in == 0) {
+				stack[top++] = i;	
+			}
+			if (etv[i] < etv[popped] + np -> weight) {
+				etv[i] = etv[popped] + np -> weight;
+			}
 		}
 	}
 	printf("\n\n");
 	return count == vNum ? FALSE : TRUE;
 }
+void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {}
 
 main () {
 	LGraph gragh;
-	// see 7-5.jpg
-	init(&gragh, (char*)("0,1,2,3,4,5,6,7,8,9,10,11,12,13"), (char*)("0-4-1,0-5-1,0-11-1,1-2-1,1-4-1,1-8-1,2-5-1,2-6-1,2-9-1,3-2-1,3-13-1,4-7-1,5-8-1,5-12-1,6-5-1,8-7-1,9-10-1,10-13-1,12-9-1"));
+	// see 7-6.jpg
+	init(&gragh, (char*)("1,2,3,4,5,,6,7,8,9"), (char*)("0-1-3,0-2-4,1-3-5,1-4-6,2-3-8,2-5-7,3-4-3,4-6-9,4-7-4,5-7-6,6-9-2,7-8-5,8-9-3"));
 	printArc(&gragh);
 	printf("\n\n");
 
-	boolean rs = topologicalSort(&gragh);
-	printf("Gragh has ring: %d\n", rs);
+	int stack2[gragh.vertexNum];
+	int top2 = 0;
+	int etv[gragh.vertexNum];
+
+	topologicalSort(&gragh, stack2, &top2, etv);
+	criticalPath(&gragh, stack2, &top2, etv);
 }
