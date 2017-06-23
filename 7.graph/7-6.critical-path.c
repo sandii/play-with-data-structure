@@ -143,7 +143,6 @@ boolean topologicalSort (LGraph* gp, int stack2[], int* top2, int etv[]) {
 	// main loop
 	while (top) {
 		int sta = stack[--top];
-		printf("%2d ", gp -> vertex[sta].data);
 		count++;
 
 		stack2[(*top2)++] = sta;		// push into stack2
@@ -193,6 +192,18 @@ void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
 	}
 
 	// print result
+	printf("Earliest Time of Vertex:\n");
+	for (int i = 0; i < vNum; i++) printf("%2d ", i);
+	printf("\n");
+	for (int i = 0; i < vNum; i++) printf("%2d ", etv[i]);
+	printf("\n\n");
+
+	printf("Lastest Time of Vertex:\n");
+	for (int i = 0; i < vNum; i++) printf("%2d ", i);
+	printf("\n");
+	for (int i = 0; i < vNum; i++) printf("%2d ", ltv[i]);
+	printf("\n\n");
+
 	printf("Critical Path:\n");
 	for (int sta = 0; sta < vNum; sta++) {
 		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
@@ -206,7 +217,7 @@ void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
 main () {
 	LGraph gragh;
 	// see 7-6.jpg
-	init(&gragh, (char*)("1,2,3,4,5,,6,7,8,9"), (char*)("0-1-3,0-2-4,1-3-5,1-4-6,2-3-8,2-5-7,3-4-3,4-6-9,4-7-4,5-7-6,6-9-2,7-8-5,8-9-3"));
+	init(&gragh, (char*)("0,1,2,3,4,5,6,7,8,9"), (char*)("0-1-3,0-2-4,1-3-5,1-4-6,2-3-8,2-5-7,3-4-3,4-6-9,4-7-4,5-7-6,6-9-2,7-8-5,8-9-3"));
 	printArc(&gragh);
 	printf("\n\n");
 
