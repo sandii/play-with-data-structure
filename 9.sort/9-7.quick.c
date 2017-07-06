@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: Apr 25, 2017
+* date: Apr 25, 2017
 *
 * quick sort
 * - updated insert-sort, was invented in 1959

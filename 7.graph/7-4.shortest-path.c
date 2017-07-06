@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: June 18, 2017
+* date: June 18, 2017
 *
 * shortest path
 * - figure out cost of v0 to every vertex

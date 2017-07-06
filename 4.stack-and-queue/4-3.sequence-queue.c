@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: Apr 24, 2017
+* date: Apr 24, 2017
 *
 * sequence queue
 * - head indexes head

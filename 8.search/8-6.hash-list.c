@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 8, 2017
+* date: May 8, 2017
 *
 * hash list 
 * 

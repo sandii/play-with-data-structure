@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: Apr 17, 2017
+* date: Apr 17, 2017
 *
 * link list
 * - index from 1

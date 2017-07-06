@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 12, 2017
+* date: May 12, 2017
 *
 * merge sort
 * - detach array into small parts, sort small arrays, and merge them

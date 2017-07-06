@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: Apr 25, 2017
+* date: Apr 25, 2017
 *
 * select sort
 * - find minimal number from unsorted list, put on the end of sorted list

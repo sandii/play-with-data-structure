@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: June 18, 2017
+* date: June 18, 2017
 *
 * mininum cost spanning tree
 * - connect every vertex with mininum cost

@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 2, 2017
+* date: May 2, 2017
 *
 * violent match
 * - match string s and p by each charactor, at postion i and j

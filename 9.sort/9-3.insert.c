@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: Apr 25, 2017
+* date: Apr 25, 2017
 *
 * insert sort
 * - insert next number to appropriate position of sorted list

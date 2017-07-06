@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 11, 2017
+* date: May 11, 2017
 *
 * heap sort
 * - invented in 1964

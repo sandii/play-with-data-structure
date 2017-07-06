@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: Apr 21, 2017
+* date: Apr 21, 2017
 *
 * static link list
 * - array of struct

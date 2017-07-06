@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 22, 2017
+* date: May 22, 2017
 *
 * merge sort
 * - non-recursive version

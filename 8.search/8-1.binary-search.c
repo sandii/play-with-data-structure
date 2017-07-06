@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 3, 2017
+* date: May 3, 2017
 *
 * binary search 
 * - O(logn)

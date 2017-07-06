@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 4, 2017
+* date: May 4, 2017
 *
 * fibonacci search 
 * - O(logn)

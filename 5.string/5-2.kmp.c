@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 2, 2017
+* date: May 2, 2017
 *
 * kmp
 * - invented by knuth-morris-pratt in 1977

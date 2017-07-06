@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 30, 2017
+* date: May 30, 2017
 *
 * adjacency list
 *

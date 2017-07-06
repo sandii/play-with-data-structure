@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 22, 2017
+* date: May 22, 2017
 *
 * adjacency matrix
 * - i-j-weight: 0-4-6 means arc[0][4] = 6

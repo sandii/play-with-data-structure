@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: May 5, 2017
+* date: May 5, 2017
 *
 * AVL tree
 * - invented by two former Soviet Union mathematicians in 1962

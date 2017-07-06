@@ -1,10 +1,10 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: June 21, 2017
+* date: June 21, 2017
 *
 * topological sort
 * - to tell gragh has ring or not, process is feasible or not
-* - remove 0 in-degree vertex and loop it
+* - repeat removing vertex of 0 in-degree
 * - at last to see is there any vertex left
 *
 */

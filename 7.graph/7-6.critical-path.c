@@ -1,6 +1,6 @@
 /*
 * author: chenzhi <chenzhibupt@qq.com>
-* data: June 23, 2017
+* date: June 23, 2017
 *
 * critical path
 * - from start point to end, longest path is critical path
