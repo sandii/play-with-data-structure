@@ -17,7 +17,7 @@
 #define VMAX 20
 
 typedef struct ArcNode {
-	int adjacency;
+	int to;
 	int weight;
 	struct ArcNode* next;
 } ArcNode;
@@ -92,7 +92,7 @@ void init (LGraph* gp, char* vStr, char* aStr) {
 		int i = atoi(numArr[0]);
 		int j = atoi(numArr[1]);
 		ArcNode* temp = (ArcNode*) malloc(sizeof(ArcNode));
-		temp -> adjacency = j;
+		temp -> to = j;
 		temp -> weight = atoi(numArr[2]);
 		temp -> next = gp -> vertex[i].firstEdge;
 		gp -> vertex[i].firstEdge = temp;
@@ -107,7 +107,7 @@ void printArc (LGraph* gp) {
 	for (int i = 0; i < gp -> vertexNum; i++) {
 		printf("%2d (%d in) - ", gp -> vertex[i].data, gp -> vertex[i].in);
 		for (ArcNode* ap = gp -> vertex[i].firstEdge; ap != NULL; ap = ap -> next) {
-			int j = ap -> adjacency;
+			int j = ap -> to;
 			printf("%2d ", gp -> vertex[j].data);
 		}
 		printf("\n");
@@ -142,7 +142,7 @@ boolean topologicalSort (LGraph* gp) {
 		count++;
 
 		for (np = gp -> vertex[popped].firstEdge; np; np = np -> next) {
-			int i = np -> adjacency;
+			int i = np -> to;
 			(gp -> vertex[i].in)--;
 			if (gp -> vertex[i].in) continue;
 			stack[top++] = i;
