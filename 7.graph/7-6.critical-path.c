@@ -135,9 +135,9 @@ boolean topologicalSort (LGraph* gp, int stack2[], int* top2, int etv[]) {
 
 	// init
 	for (int i = 0; i < vNum; i++) {
-		if(gp -> vertex[i].in) continue;
-		stack[top++] = i;
 		etv[i] = 0;
+		if(gp -> vertex[i].in) continue;
+		stack[top++] = i;			
 	}
 
 	// main loop
@@ -186,8 +186,9 @@ void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
 		int sta = stack2[--(*top2)];
 		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
 			int end = np -> adjacency;
-			if (ltv[sta] >= ltv[end] - np -> weight) continue;
-			ltv[sta] = ltv[end] - np -> weight;
+			if (ltv[sta] > ltv[end] - np -> weight) {
+				ltv[sta] = ltv[end] - np -> weight;
+			}
 		}
 	}
 
@@ -208,7 +209,7 @@ void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
 	for (int sta = 0; sta < vNum; sta++) {
 		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
 			int end = np -> adjacency;
-			if (ltv[sta] != ltv[end] - np -> weight) continue;
+			if (etv[sta] != ltv[end] - np -> weight) continue;
 			printf("<%d, %d> ", sta, end);
 		}
 	}
@@ -217,6 +218,7 @@ void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
 main () {
 	LGraph gragh;
 	// see 7-6.jpg
+	// init(&gragh, (char*)("0,1,2,3"), (char*)("0-2-2,1-2-4,2-3-5"));
 	init(&gragh, (char*)("0,1,2,3,4,5,6,7,8,9"), (char*)("0-1-3,0-2-4,1-3-5,1-4-6,2-3-8,2-5-7,3-4-3,4-6-9,4-7-4,5-7-6,6-9-2,7-8-5,8-9-3"));
 	printArc(&gragh);
 	printf("\n\n");
