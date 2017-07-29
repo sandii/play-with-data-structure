@@ -122,48 +122,46 @@ void printArc (LGraph* gp) {
 	printf("\n");
 }
 
-
-typedef int boolean;
-#define TRUE  1
-#define FALSE 0
-
-
-boolean topologicalSort (LGraph* gp, int stack2[], int* top2, int etv[]) {
-	ArcNode* np = NULL;
+// this version of topologicalSort return number of non-loop vertex
+int topologicalSort (LGraph* gp, int stack[]) {
 	int vNum = gp -> vertexNum;
 	int count = 0;
-
-	// stack
 	int top = 0;
-	int stack[vNum];
+	int _stack[vNum];
 
-	// init
 	for (int i = 0; i < vNum; i++) {
-		etv[i] = 0;
 		if(gp -> vertex[i].in) continue;
-		stack[top++] = i;			
+		stack[count++] = _stack[top++] = i;	
 	}
-
 	// main loop
 	while (top) {
-		int sta = stack[--top];
-		count++;
+		int sta = _stack[--top];
 
-		stack2[(*top2)++] = sta;		// push into stack2
-
-		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+		for (ArcNode* np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
 			int end = np -> adjacency;
 			(gp -> vertex[end].in)--;
-			if (gp -> vertex[end].in == 0) {
-				stack[top++] = end;	
-			}
+			if (gp -> vertex[end].in) continue;
+			stack[count++] = _stack[top++] = end;
+		}
+	}
+	return count;
+}
+void getEtv (LGraph* gp, int etv[], int stack[], int len) {
+	// init
+	for (int i = 0; i < len; i++) {
+		etv[i] = 0;
+	}
+	// main loop
+	for (int i = 0; i < len; i++) {
+		int sta = stack[i];
+		for (ArcNode* np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+			int end = np -> adjacency;
 			if (etv[end] < etv[sta] + np -> weight) {
 				etv[end] = etv[sta] + np -> weight;
 			}
 		}
 	}
-	printf("\n\n");
-	return count == vNum ? FALSE : TRUE;
+
 }
 #define INFINITY 65535
 int maxInArr (int arr[], int len) {
@@ -174,44 +172,38 @@ int maxInArr (int arr[], int len) {
 	}
 	return max;
 }
-void criticalPath (LGraph* gp, int stack2[], int* top2, int etv[]) {
-	int vNum = gp -> vertexNum;
-	ArcNode* np = NULL;
-	int ltv[vNum];
-
+void getLtv (LGraph* gp, int ltv[], int stack[], int len, int etv[]) {
 	// init
-	int max = maxInArr(etv, vNum);
-	for (int i = 0; i < vNum; i++) {
+	int max = maxInArr(etv, len);
+	for (int i = 0; i < len; i++) {
 		ltv[i] = max;
 	}
-
-	// get ltv
-	while (*top2) {
-		int sta = stack2[--(*top2)];
-		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+	// main loop
+	for (int i = len - 1; i >= 0; i--) {
+		int sta = stack[i];
+		for (ArcNode* np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
 			int end = np -> adjacency;
+			// printf("%d - %d  %d : %d\n", sta, end, ltv[sta], ltv[end] - np -> weight);
 			if (ltv[sta] > ltv[end] - np -> weight) {
 				ltv[sta] = ltv[end] - np -> weight;
 			}
 		}
 	}
-
+}
+void criticalPath (LGraph* gp, int etv[], int ltv[], int stack[], int len) {
 	// print result
-	printf("Earliest Time of Vertex:\n");
-	for (int i = 0; i < vNum; i++) printf("%2d ", i);
-	printf("\n");
-	for (int i = 0; i < vNum; i++) printf("%2d ", etv[i]);
-	printf("\n\n");
-
-	printf("Lastest Time of Vertex:\n");
-	for (int i = 0; i < vNum; i++) printf("%2d ", i);
-	printf("\n");
-	for (int i = 0; i < vNum; i++) printf("%2d ", ltv[i]);
+	printf("\nindex: ");
+	for (int i = 0; i < len; i++) printf("%2d ", stack[i]);
+	printf("\netv:   ");
+	for (int i = 0; i < len; i++) printf("%2d ", etv[i]);
+	printf("\nltv:   ");
+	for (int i = 0; i < len; i++) printf("%2d ", ltv[i]);
 	printf("\n\n");
 
 	printf("Critical Path:\n");
-	for (int sta = 0; sta < vNum; sta++) {
-		for (np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
+	for (int i = 0; i < len; i++) {
+		int sta = stack[i];
+		for (ArcNode* np = gp -> vertex[sta].firstEdge; np; np = np -> next) {
 			int end = np -> adjacency;
 			if (etv[sta] != ltv[end] - np -> weight) continue;
 			printf("<%d, %d> ", sta, end);
@@ -227,10 +219,9 @@ main () {
 	printArc(&gragh);
 	printf("\n\n");
 
-	int stack2[gragh.vertexNum];
-	int top2 = 0;
-	int etv[gragh.vertexNum];
-
-	topologicalSort(&gragh, stack2, &top2, etv);
-	criticalPath(&gragh, stack2, &top2, etv);
+	int stack[gragh.vertexNum];
+	int len = topologicalSort(&gragh, stack);
+	int etv[len]; getEtv(&gragh, etv, stack, len);
+	int ltv[len]; getLtv(&gragh, ltv, stack, len, etv);
+	criticalPath(&gragh, etv, ltv, stack, len);	
 }
