@@ -29,74 +29,74 @@
 #include <string.h> // strlen
 
 void getNext (char* p, int next[]) {
-	// init
-	int len = strlen(p);
-	int sta = 0;
-	int end = 1;
-	next[0] = 0;
+  // init
+  int len = strlen(p);
+  int sta = 0;
+  int end = 1;
+  next[0] = 0;
 
-	// main loop
-	while (end < len) {
+  // main loop
+  while (end < len) {
 
-		// if equal, situation is simple
-		if (p[sta] == p[end]) {
-			next[end] = sta + 1;
-			sta++;
-			end++;
-			continue;
-		} 
+    // if equal, situation is simple
+    if (p[sta] == p[end]) {
+      next[end] = sta + 1;
+      sta++;
+      end++;
+      continue;
+    } 
 
-		// if not equal, have 2 possibilities
-		if (sta == 0) {
-			next[end++] = 0;
-		} else {
-			sta = 0;
-		}
-	}
+    // if not equal, have 2 possibilities
+    if (sta == 0) {
+      next[end++] = 0;
+    } else {
+      sta = 0;
+    }
+  }
 
-	// shift one step to right
-	for (int i = len - 1; i > 0; i--) {
-		next[i] = next[i - 1];
-	}
+  // shift one step to right
+  for (int i = len - 1; i > 0; i--) {
+    next[i] = next[i - 1];
+  }
 }
 
 int kmp (char* s, char* p) {
-	int sLen = strlen(s);
-	int pLen = strlen(p);
-	int i = 0;
-	int j = 0;	
-	int next[pLen];
-	getNext(p, next);
-	while (i < sLen && j < pLen) {
-		if (s[i] == p[j]) {
-			i++;
-			j++;
-			continue;
-		} 
-		if (j == 0) {
-			i++;
-		} else {
-			j = next[j];
-		}
-	}
-	if (j == pLen) {
-		return i - j;
-	} else {
-		return -1;
-	}	
+  int sLen = strlen(s);
+  int pLen = strlen(p);
+  int i = 0;
+  int j = 0;  
+  int next[pLen];
+  getNext(p, next);
+  while (i < sLen && j < pLen) {
+    if (s[i] == p[j]) {
+      i++;
+      j++;
+      continue;
+    } 
+    if (j == 0) {
+      i++;
+    } else {
+      j = next[j];
+    }
+  }
+  if (j == pLen) {
+    return i - j;
+  } else {
+    return -1;
+  }  
 }
 
 main () {
-	char* p = (char*)("ABCFFABCGAG");
-	int len = strlen(p);
-	int next[len];
-	getNext(p, next);
-	for (int i = 0; i < len; i++) printf("%2d ", i); printf("\n");
-	for (int i = 0; i < len; i++) printf("%2c ", p[i]); printf("\n");
-	for (int i = 0; i < len; i++) printf("%2d ", next[i]); printf("\n");
-	
-	printf("%d\n", kmp((char*)("hello"), (char*)("ell")));
-	printf("%d\n", kmp((char*)("hello"), (char*)("all")));
-	printf("%d\n", kmp((char*)("hello"), (char*)("hel")));
-	printf("%d\n", kmp((char*)("hello"), (char*)("ababacd")));
+  char* p = (char*)("ABCFFABCGAG");
+  int len = strlen(p);
+  int next[len];
+  getNext(p, next);
+  for (int i = 0; i < len; i++) printf("%2d ", i); printf("\n");
+  for (int i = 0; i < len; i++) printf("%2c ", p[i]); printf("\n");
+  for (int i = 0; i < len; i++) printf("%2d ", next[i]); printf("\n");
+  
+  printf("%d\n", kmp((char*)("hello"), (char*)("ell")));
+  printf("%d\n", kmp((char*)("hello"), (char*)("all")));
+  printf("%d\n", kmp((char*)("hello"), (char*)("hel")));
+  printf("%d\n", kmp((char*)("hello"), (char*)("ababacd")));
 }

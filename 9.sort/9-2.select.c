@@ -12,39 +12,39 @@
 #define LEN 20
 
 void init (int a[]) {
-	for (int i = 0; i < LEN; i++) { 
-		a[i] = rand() % 100;
-	}
+  for (int i = 0; i < LEN; i++) { 
+    a[i] = rand() % 100;
+  }
 }
 void traverse (int a[]) {
-	for (int i = 0; i < LEN; i++) {
-		printf("%2d ", a[i]);
-	}
-	printf("\n");
+  for (int i = 0; i < LEN; i++) {
+    printf("%2d ", a[i]);
+  }
+  printf("\n");
 }
 void swap (int a[], int i, int j) {
-	if (i == j) return;
-	int temp = a[i];
-	a[i] = a[j];
-	a[j] = temp;
+  if (i == j) return;
+  int temp = a[i];
+  a[i] = a[j];
+  a[j] = temp;
 }
 
 void selectSort (int a[]) {
-	int min, i, j;
-	for (i = 0; i < LEN; i++) {
-		min = i;
-		for (j = i + 1; j < LEN; j++) {
-			if(a[j] < a[min]) min = j;
-		}
-		if (min != i) swap(a, min, i);
-	}
+  int min, i, j;
+  for (i = 0; i < LEN; i++) {
+    min = i;
+    for (j = i + 1; j < LEN; j++) {
+      if(a[j] < a[min]) min = j;
+    }
+    if (min != i) swap(a, min, i);
+  }
 }
 
 main () {
-	int a[LEN];
-	init(a);
-	traverse(a);
-	selectSort(a);
-	traverse(a);
+  int a[LEN];
+  init(a);
+  traverse(a);
+  selectSort(a);
+  traverse(a);
 }
 
